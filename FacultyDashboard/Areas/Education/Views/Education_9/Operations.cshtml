@@ -1,0 +1,193 @@
+﻿@using Entities;
+@using FacultyDashboard.Infrastructure
+@model FacultyDashboard.Areas.Education.Models.Education_9_Dto
+@{
+	ViewData["Title"] = "دانشجویان مهمان از سایر دانشکده های دانشگاه ع پ ارتش به دانشکده پیراپزشکی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    DateTime? _RegisterDate = new DateTime();
+    if (Model != null)
+    {
+        _RegisterDate = Model.RegisterDate.HasValue ? Model.RegisterDate.Value : new DateTime();
+    }
+}
+
+@section Styles{
+    <link href="~/Admin/Search/Search2/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Admin/Search/Search2/css/structured-filter.css" rel="stylesheet" />
+    <link href="~/Admin/Search/Search2/css/structured-filter-rtl.css" rel="stylesheet" />
+}
+<!-- Start Content-->
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">شاخص های حوزه آموزش</a></li>
+                        <li class="breadcrumb-item">دانشجویان مهمان از سایر دانشکده ها</li>
+                        <li class="breadcrumb-item active">ثبت اطلاعات</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+   <!-- end page title -->
+</div>
+
+<div class="row">
+   <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <div class="row justify-content-between">
+                  <div class="col-md-12">
+                <h4 class="page-title">دانشجویان مهمان از سایر دانشکده ها</h4>
+                   </div>
+                   <!-- end col-->
+               </div>
+               <!-- end row -->
+           </div>
+       </div>
+       <!-- end card -->
+   </div>
+   <!-- end col-->
+</div>
+<!-- end row -->
+
+<div class="row">
+   <div class="col-12">
+       <div class="card">
+           <div class="card-body">
+               <h4 class="header-title">اطلاعات</h4>
+               <p class="sub-header"></p>
+               <!--asp-area="Admin" asp-action="Opertaions" asp-controller="Book"-->
+               <form asp-action="Operations" asp-controller="Education_9" method="post" enctype="multipart/form-data">
+                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <label asp-for="@Model.EducationDegree"></label>
+                          <select asp-for="@Model.EducationDegree" asp-items="@Html.GetEnumSelectList<EducationType>()" class="select2 form-control req">
+                              <option value="">--انتخاب--</option>
+                          </select>
+                          <div class="invalid-feedback">
+                              <i class="bx bx-radio-circle"></i>
+                                 مقدار این متغیر را وارد نمایید.
+                          </div>   
+                      </div>
+                      <div class="col-lg-6">
+                          <label asp-for="@Model.Gender"></label>
+                          <select asp-for="@Model.Gender" asp-items="@Html.GetEnumSelectList<GenderType>()" class="select2 form-control req">
+                              <option value="">--انتخاب--</option>
+                          </select>
+                          <div class="invalid-feedback">
+                              <i class="bx bx-radio-circle"></i>
+                                 مقدار این متغیر را وارد نمایید.
+                          </div>   
+                      </div>
+                   </div> 
+                   <div class="row">
+                      <div class="col-lg-6">
+                          <label asp-for="@Model.Count"></label>
+                          <input asp-for="@Model.Count" class="form-control req">
+                          <div class="invalid-feedback">
+                              <i class="bx bx-radio-circle"></i>
+                                 مقدار این متغیر را وارد نمایید.
+                          </div>   
+                      </div>
+                       <div class="col-lg-6">
+                           <label asp-for="@Model.RegisterDate"></label>
+                           <input type="text" id="RegisterDate" name="RegisterDate" class="form-control" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" data-jdp-only-date/>   
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6">
+                           <button id="submitbtn" type="button" onclick="save()" class="btn btn-success waves-effect waves-light">افزودن</button>
+                       </div>
+                       <div class="col-lg-6">
+
+                       </div>
+                   </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        var urlid = 0
+        function validation() {
+            var output = false;
+            $('.req').each(function () {
+                if ($(this).val() == "") {
+                    output = false;
+                    $(this).addClass('is-invalid');
+                }
+                else {
+                    if ($(this).type == "number" && !$(this).val().match(/^\d+$/)) {
+                        output = false;
+                        $(this).addClass('is-invalid');
+                        debugger;
+                    }
+                    else {
+                        output = true;
+                        $(this).removeClass("is-invalid");
+                    }
+                }
+            });
+            return output;
+        }
+        $(function () {
+            var currentUrl = window.location.href;
+            var result = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+            if (result != null && isANumber(result)) {
+                urlid = parseInt(result);
+                $("#RegisterDate").val(persianToMiladiShow('@_RegisterDate'));
+            }
+        })
+        function save() {
+            if (!validation()) {
+                swal("لطفا خطاها را برطرف نمایید");
+            }
+            else if (validation()) {
+                 var data = {
+                    EducationDegree: $('#EducationDegree').val(),
+                    Gender: $('#Gender').val(),
+                    Count: $('#Count').val(),
+                    RegisterDate: persianToMiladi($('#RegisterDate').val())
+                }
+                var test = JSON.stringify(data);
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: "/Education/Education_9/Save",
+                    data: {
+                        uriidForEdit: urlid,
+                        datas: JSON.stringify(data)
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.result == "no"){
+                            swal("مشکلی در ثبت اطلاعات پیش آمده");
+                        }
+                        else{
+                            swal({
+                                title: "پیام",
+                                text: "عملیات با موفقیت انجام شد",
+                                type: "success"
+                            }, function () {
+                                    window.location = "/Education/Education_9/Index";
+                            });
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+            }
+        }
+
+    </script>
+}

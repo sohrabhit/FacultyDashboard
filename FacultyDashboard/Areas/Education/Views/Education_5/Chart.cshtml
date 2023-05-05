@@ -1,0 +1,180 @@
+﻿@using FacultyDashboard.Infrastructure
+@{
+	ViewData["Title"] = "گزارشگیری";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section Styles{
+    <script src="/Admin/highcharts/highcharts.js"></script>
+    <script src="/Admin/highcharts/highcharts-3d.js"></script>
+    <script src="/Admin/highcharts/exporting.js"></script>
+    <script src="/Admin/highcharts/export-data.js"></script>
+    <script src="/Admin/highcharts/accessibility.js"></script>
+
+}
+<!-- Start Content-->
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">شاخص های حوزه آموزش</a></li>
+                        <li class="breadcrumb-item">آمار فارغ‌التحصیلان به تفکیک مقطع تحصیلی و جنسیت</li>
+                        <li class="breadcrumb-item active">گزارشگیری</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">آمار فارغ‌التحصیلان به تفکیک مقطع تحصیلی و جنسیت</h4>
+            </div>
+        </div>
+    </div>
+   <!-- end page title -->
+</div>
+
+<div class="row">
+   <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-lg-6">
+                      <div class="form-group row" id="dd1">
+                                @*<label class="required col-form-label col-sm-2">مورد جستجو</label>
+                                <div class="col-lg-4" id="div6_7">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <select id="srachfield" class="select2 form-control req" onchange="firsttable(this.value);">
+                                                <option value="" selected>-- انتخاب --</option>
+                                                <option value="EducationDegree">نوع مراجعه</option>
+                                                <option value="StartDate_FA">تاریخ و زمان شروع دوره</option>
+                                                <option value="EndDate_FA">تاریخ و زمان پایان دوره</option>
+                                                <option value="All_Refered">تعداد کل بیماران مراجعه کننده</option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            <i class="bx bx-radio-circle"></i>
+                                            مقدار این متغیر را وارد نمایید.
+                                        </div>
+                                    </fieldset>
+                                </div>*@
+                                <label class="col-form-label col-sm-2">نام کاربر</label>
+                                <div class="col-lg-4">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <select id="Doctor_id" name="Doctor_id" class="select2 form-control req">
+                                                <option value="0" selected>کل کاربران</option>
+                                                @foreach (var item in (IEnumerable<SelectListItem>)ViewData["doctors"])
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                  </div>
+                  <div class="col-lg-6">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6">
+                      <form class="d-flex flex-wrap align-items-center">
+                          <label for="inputPassword2" class="visually-hidden">جستجو</label>
+                          <div class="me-3" id="datemaindiv1">
+                              <label>کل بازه های زمانی ثبت شده</label>
+                              <input value="kol" name="datetype" type="radio" checked />
+                              <label>محدوده تاریخی</label>
+                              <input value="nokol" name="datetype" type="radio" />                       
+                          </div>
+                         @* <div class="form-group" id="datemaindiv2">
+                                <label>بر اساس</label>
+                                <label>روز</label>
+                                <input value="day" name="datedetail" type="radio">
+                                <label>ماه</label>
+                                <input value="mon" name="datedetail" type="radio" checked>
+                                <label>سال</label>
+                                <input value="year" name="datedetail" type="radio">
+                            </div>*@
+                      </form>
+                   </div>                   
+              </div>
+              <div class="row" id="datediv" style="display:none">
+                  <div class="col-lg-12">
+                      <div class="form-group row">
+                           <label class="col-form-label col-sm-1">از تاریخ</label>
+                           <div class="col-lg-4">
+                              <fieldset>
+                                 <div class="input-group">
+                                     <input id="startDate" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" data-jdp-only-date type="text" class="form-control req date">
+                                 </div>
+                                 <div class="invalid-feedback">
+                                     <i class="bx bx-radio-circle"></i>
+                                     مقدار این متغیر را وارد نمایید.
+                                 </div>
+                             </fieldset>
+                           </div>
+                           <label class="col-form-label col-sm-1">تا</label>
+                           <div class="col-lg-4">
+                               <fieldset>
+                                   <div class="input-group">
+                                       <input id="endDate" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" data-jdp-only-date type="text" class="form-control req date">
+                                   </div>
+                                   <div class="invalid-feedback">
+                                       <i class="bx bx-radio-circle"></i>
+                                       مقدار این متغیر را وارد نمایید.
+                                   </div>
+                              </fieldset>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-8">
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="text-md-end mt-3 mt-md-0">
+                         <!--<button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button>-->
+                         <button type="button" onclick="showreport();" class="btn btn-danger waves-effect waves-light me-1"> نمایش</button>
+                     </div>
+                  </div>
+              </div>
+                   <!-- end col-->
+               </div>
+              <!-- end row -->
+         </div>
+    </div>
+    <!-- end card -->
+</div>
+<!-- end col-->
+<div class="row">
+   <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <div class="row" id="chrow">
+
+              </div>
+          </div>
+      </div>
+   </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+   <script>
+       $('input:radio[name="datetype"]').change(
+            function () {
+                if (this.checked && this.value == 'kol') {
+                    $("#datediv").hide();
+                    $("#startDate").val("");
+                    $("#endDate").val("");
+                }
+                else if (this.checked && this.value == 'nokol') {
+                    $("#datediv").show();
+                }
+            });
+        function showreport() {
+            Education_5LoadReport($("#Doctor_id").val(), $("#startDate").val(), $("#endDate").val(), "chrow"/*, $('input[name="datedetail"]:checked').val()*/);
+        }
+
+    </script>
+}

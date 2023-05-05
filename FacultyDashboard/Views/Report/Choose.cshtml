@@ -1,0 +1,275 @@
+﻿@using Entities;
+@using FacultyDashboard.Infrastructure
+@*@model FacultyDashboard.Areas.Student.Models.Student_6_Dto*@
+@{
+	ViewData["Title"] = "تنظیمات مربوط به شاخص ها";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    DateTime? _RegisterDate = new DateTime();
+    if (Model != null)
+    {
+        _RegisterDate = Model.RegisterDate;
+    }
+}
+
+@section Styles{
+ 
+}
+<!-- Start Content-->
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">داشبورد</a></li>
+                        <li class="breadcrumb-item">تنظیمات مربوط به شاخص ها</li>
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+   <!-- end page title -->
+</div>
+
+<div class="row">
+   <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <div class="row justify-content-between">
+                  <div class="col-md-6">
+                        <h4 class="page-title">تنظیمات مربوط به شاخص ها</h4>
+                   </div>
+                   <div class="col-md-4">
+                   </div>
+                   <!-- end col-->
+               </div>
+               <!-- end row -->
+           </div>
+       </div>
+       <!-- end card -->
+   </div>
+   <!-- end col-->
+</div>
+<!-- end row -->
+
+<div class="row">
+   <div class="col-12">
+       <div class="card">
+           <div class="card-body">
+              <div class="row">
+
+                    <div class="repeater" id="rep2">
+                        <div data-repeater-list="group-b">
+                            <div data-repeater-item class="outer_2">
+                                <div class="row mb-50">
+                                    <div class="col-3 col-md-4 invoice-item-title">شاخص جدید</div>
+                                </div>
+                                <div class="invoice-item d-flex border rounded mb-1">
+                                    <div class="invoice-item-filed row pt-1 px-1">
+                                        <div class="col-md-6 form-group">
+                                            <input type="hidden" name="id" value="" />
+                                            <label for="basicInput">نام</label>
+                                            <select class="form-control is-invalid ques" id="indicator_Name" name="indicator_Name">
+                                                <option value=""></option>
+                                                    <!-- Education -->
+                                                <optgroup label="شاخص های آموزش">
+                                                    <option value="edu_1">تعداد دانشجویان شاغل به تحصیل</option>
+                                                    <option value="edu_2">تعداد دانشجویان ورودی</option>
+                                                    <option value="edu_3">آمار دانشجویان بورسیه ( سپاه،ناجا،وزارت دفاع)</option>
+                                                    <option value="edu_4">آمار دانشجویان آزاد</option>
+                                                    <option value="edu_5">آمار فارغ‌التحصیلان به تفکیک مقطع تحصیلی و جنسیت</option>
+                                                    <option value="edu_6">نسبت دانشجویان به اساتید</option>
+                                                    <option value="edu_7">دانشجویان مشروط(معدل زیر 12)</option>
+                                                    <option value="edu_8">دانشجویان مهمان از دانشکده پیراپزشکی به سایر دانشکده ها...</option>
+                                                    <option value="edu_9">آمار دانشجویان مهمان از سایر دانشکده های دانشگاه ع پ ارتش به دانشکده پیراپزشکی</option>
+                                                    <option value="edu_10">ميانگين معدل سالانه دانشجويان</option>
+                                                    <option value="edu_11">تعداد دانشجویان المپیاد</option>
+                                                    <option value="edu_12">تعداد دانشجویان استعداد درخشان</option>
+                                                </optgroup>
+                                                    <!-- IT -->
+                                                <optgroup label="حوزه توسعه و فناوری شاخص های">
+                                                    <option value="it_1">تعداد قراردادهای پژوهشی منعقد شده دانشکده با صنعت (کلی و به تفکیک گروه آموزشی)</option>
+                                                    <option value="it_2">تعداد شرکت های دانش بنیان ایجاد شده توسط استادان و دانشجویان دانشکده ثبت اختراعات(کلی و به تفکیک گروه آموزشی)</option>
+                                                    <option value="it_3">تجاری سازی نتایج تحقیقات و پژوهش های دانشکده (کلی و به تفکیک گروه آموزشی)</option>
+                                                    <option value="it_4">تعداد ثبت اختراعات به تفکیک گروه آموزشی</option>
+                                                    <option value="it_5">کارگاه آموزشی</option>
+                                                    <option value="it_6">کارگاه های مهارت آموزی( مختص کارکنانی که دریافت امتیاز آموزش مداون برای آنها مطرح نیست</option>
+                                                    <option value="it_7">برگزاری دوره های مهارت آموزی ( تدوین اقدامات پیش بیمارستانی)</option>
+                                                </optgroup>
+                                                    <!-- Research -->
+                                                <optgroup label="شاخص های حوزه پژوهش">
+                                                    <option value="research_1">تعداد مقاله های نمایه شده در مجلات</option>
+                                                    <option value="research_2">تعداد سمینارهای علمی داخلی و بین المللی برگزار شده در دانشکده</option>
+                                                    <option value="research_3">تعداد مقالات مشترک با محققان دیگر کشورها(کلی و به تفکیک گروه آموزشی)</option>
+                                                    <option value="research_4">تعداد طرح‌های انجام شده و در حال انجام  برحسب سال(کلی و به تفکیک گروه آموزشی)</option>
+                                                    <option value="research_5">تعداد پایان نامه های مقاطع تحصیلی کارشناسی ارشد و دکتری در حال انجام(کلی و به تفکیک گروه آموزشی)</option>
+                                                    <option value="research_6">تعداد پایان نامه های مقاطع تحصیلی کارشناسی ارشد و دکتری انجام شده(کلی و به تفکیک گروه آموزشی)</option>
+                                                </optgroup>
+                                                    <!-- Resource -->
+                                                <optgroup label="شاخص های مدیریت منابع">
+                                                    <option value="resource_1">تعداد هیأت علمی</option>
+                                                    <option value="resource_2">تعداد هیأت علمی به تفکیک گروه آموزشی</option>
+                                                    <option value="resource_3">کارشناس آموزش</option>
+                                                    <option value="resource_4">تعداد کارکنان اداری</option>
+                                                    <option value="resource_5">نسبت كاركنان اداري به كل دانشجويان</option>
+                                                    <option value="resource_6">نسبت كاركنان اداري به اعضاي هيأت علمي</option>
+                                                    <option value="resource_7">تعداد هیأت علمی به مرتبه علمی و جنسیت</option>
+                                                </optgroup>
+                                                    <!-- Student -->
+                                                <optgroup label="شاخص های دانشجویی">
+                                                    <option value="stu_1">اساتید مشاور</option>
+                                                    <option value="stu_2">مراسم</option>
+                                                    <option value="stu_3">تعداد دانشجویان تحت پوشش برنامه ها و فعالیت های ورزش درون دانشکده</option>
+                                                    <option value="stu_4">تعداد دانشجویان تحت پوشش ورزش های قهرمانی</option>
+                                                    <option value="stu_5">تعداد انجمن های ورزش دانشجویی</option>
+                                                    <option value="stu_6">تعداد نشریات دانشجویی</option>
+                                                    <option value="stu_7">تعداد تشکلهای اسلامی</option>
+                                                    <option value="stu_8">تعداد انجمن های علمی - دانشجویی</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="invoice-icon d-flex flex-column justify-content-between border-left p-25">
+                                        <span class="cursor-pointer outer" data-repeater-delete>
+                                            حذف<i class="bx bx-x"></i>
+                                        </span>
+                                        <div class="dropdown">
+                                        </div>
+                                    </div>
+                                 </div>
+                             </div>
+                         </div>
+                        <div class="form-group">
+                            <div class="col p-0">
+                                <button class="btn btn-light-primary btn-sm" data-repeater-create type="button">
+                                    <i class="bx bx-plus"></i>
+                                    <span class="invoice-repeat-btn">افزودن شاخص</span>
+                                </button>
+                            </div>
+                        </div>
+                     </div>  
+                    <button class="btn btn-primary" type="button" onclick="save()">ذخیره</button>
+                    <!-- datatable ends -->          
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <!-- repeatr addon -->
+    <script src="~/Admin/addable/repeater/jquery.repeater.min.js"></script>
+    <script src="~/Admin/addable/app-invoice.js"></script>
+    <script>
+
+        var $repeater2 = $('#rep2').repeater();
+        $(function () {
+            Load_Inter_Data();
+        })
+        function Load_Inter_Data() {
+            var end_url = window.location.pathname.split("/").pop();
+            var id = $.isNumeric(end_url) ? parseInt(end_url) : 0;
+            $.ajax({
+                url: "/Report/Load",
+                type: "GET",
+                data: { id: id },
+                dataType: "json",
+                success: function (response) {
+                    var json_text = JSON.stringify(response, null);
+                    if (response != "") {
+                        $repeater2.setList(JSON.parse(json_text));
+                    }
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        }
+        function convert_Interpret_Data() {
+            var ob = $repeater2.repeaterVal();
+            debugger;
+            var item_1 = "[";
+            var tt = ob['group-b'];
+            for (var i = 0; i < tt.length; i++) {
+                item_1 += '{"indicator_Name":"' + tt[i].indicator_Name + '","id":"' + (tt[i].id == "" ? "0" : tt[i].id) + '"},';
+            }
+            item_1 = removelastcomma(item_1);
+            item_1 += "]";
+            //debugger;
+            return item_1;
+        }
+        function checkvalidate_Data() {
+            var ob = $repeater2.repeaterVal();
+            var b = true;
+            var tt = ob['group-b'];
+            for (var i = 0; i < tt.length; i++) {
+                if (tt[i].indicator_Name == "" ) {
+                    b = false;
+                    return;
+                }
+            }
+            //debugger;
+            return b;
+        }
+        function save() {
+            //if (!checkvalidate_Data()) {
+            //    swal("لطفا کل اطلاعات را پر کنید");
+            //}
+            //else {
+            //var ob = $repeater2.repeaterVal();
+            //debugger;
+            //var ob = $('#rep2').repeater();
+            //if(ob != null && $('#rep2').repeater()!=null)
+            //{
+            //    alert('ok');
+            //}
+            //debugger;
+            var all_Interprate_Data = "";
+            try{
+                all_Interprate_Data = JSON.stringify(jQuery.parseJSON(convert_Interpret_Data())).toString();
+            } catch(err) {  
+                //alert("err");
+            } finally {
+                //code for finally block
+            }
+            //debugger;
+                $.ajax({
+                    type: "GET",
+                    url: "/Report/Save",
+                    data: {
+                        //uriidForEdit: urlid,
+                        //  acceptid: acceptid,
+                        //  patid: $("#mypat").val(),
+                        datas: all_Interprate_Data//JSON.stringify(data)
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        swal({
+                            title: "پیام",
+                            text: "عملیات با موفقیت انجام شد",
+                            type: "success"
+                        }, function () {
+                            window.location = "/Report/Choose";
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+            //}
+        }
+        function removelastcomma(strVal) {
+            var outres = strVal;
+            if (strVal != null && strVal != "" && strVal.includes(",")) {
+                var lastChar = strVal.slice(-1);
+                if (lastChar == ',') { // check last character is string
+                    outres = strVal.slice(0, -1); // trim last character
+                }
+            }
+            return outres;
+        }
+    </script>
+}

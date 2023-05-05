@@ -1,0 +1,175 @@
+﻿@model FacultyDashboard.Models.UserRegisterDto
+@{
+	ViewData["Title"] = "عضویت";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@section Styles{
+
+}
+   <div class="card bg-pattern">
+                        <div class="card-body p-4">
+                            <div class="text-center w-75 m-auto">
+                                <div class="auth-logo">
+                                    <a href="index.html" class="logo logo-dark text-center">
+                                        <span class="logo-lg">
+                                                <img src="/Admin/images/logo-dark.png" alt="" height="22">
+                                            </span>
+                                    </a>
+
+                                    <a href="index.html" class="logo logo-light text-center">
+                                        <span class="logo-lg">
+                                                <img src="/Admin/images/logo-light.png" alt="" height="22">
+                                            </span>
+                                    </a>
+                                </div>
+                                <p class="text-muted mb-4 mt-3">حساب ندارید؟ حساب خود را ایجاد کنید ، کمتر از یک دقیقه طول می کشد</p>
+                            </div>
+                            
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <form asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                
+                                <div class="mb-3">
+                                    <label asp-for="FirstName" class="form-label"></label>
+                                    <input asp-for="FirstName" class="form-control req" placeholder="@Model.FirstName" required />
+                                    <span asp-validation-for="FirstName" class="text-danger" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="LastName" class="form-label"></label>
+                                    <input asp-for="LastName" class="form-control req" placeholder="@Model.LastName" required />
+                                    <span asp-validation-for="LastName" class="text-danger" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Email" class="form-label"></label>
+                                    <input asp-for="Email" type="email" class="form-control req" placeholder="@Model.Email" required />
+                                    <span asp-validation-for="Email" class="text-danger" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="UserName" class="form-label"></label>
+                                    <input asp-for="UserName" class="form-control req" placeholder="@Model.UserName" required />
+                                    <span asp-validation-for="UserName" class="text-danger" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Password" class="form-label"></label>
+                                    <div class="input-group input-group-merge">
+                                        @*<input type="password" id="Password" name="Password" class="form-control" placeholder="رمز عبور">*@
+                                          <input asp-for="Password" class="form-control req" placeholder="@Model.Password" required />
+                                          <div class="input-group-text" data-password="false">
+                                            <span class="password-eye"></span>
+                                          </div>
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                                    <div class="input-group input-group-merge">
+                                        @*<input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="رمز عبور تکرار">*@
+                                        <input asp-for="ConfirmPassword" class="form-control req" placeholder="@Model.ConfirmPassword" required />
+                                        <div class="input-group-text" data-password="false">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger" />
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="checkbox-signup">
+                                        <label class="form-check-label" for="checkbox-signup">قبول دارم <a href="javascript: void(0);" class="text-dark">شرایط و ضوابط</a></label>
+                                    </div>
+                                </div>
+                                <div class="text-center d-grid">
+                                    @*<button class="btn btn-success" type="button" onclick="save()"> ثبت نام </button>*@
+                                    <button class="btn btn-success" type="submit"> ثبت نام </button>
+                                </div>
+
+                            </form>
+
+                           <!-- <div class="text-center">
+                                <h5 class="mt-3 text-muted">با استفاده از ثبت نام کنید</h5>
+                                <ul class="social-list list-inline mt-3 mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="mdi mdi-twitter"></i></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
+                                    </li>
+                                </ul>
+                            </div>-->
+
+                        </div>
+                        <!-- end card-body -->
+                    </div>
+                    <!-- end card -->
+
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <p class="text-white-50">قبلاً حساب دارید؟<a href="/Account/Login" class="text-white ms-1"><b>وارد شدن</b></a></p>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+@section Scripts{
+    <script>
+        function validation() {
+            var output = false;
+            $('.req').each(function () {
+                if ($(this).val() == "") {
+                    output = false;
+                    $(this).addClass('is-invalid');
+                }
+                else {
+                    if ($(this).type == "number" && !$(this).val().match(/^\d+$/)) {
+                        output = false;
+                        $(this).addClass('is-invalid');
+                        debugger;
+                    }
+                    else {
+                        output = true;
+                        $(this).removeClass("is-invalid");
+                    }
+                }
+            });
+            return output;
+        }
+        function save() {
+            if (!validation()) {
+                swal("لطفا خطاها را برطرف نمایید");
+            }
+            else if (validation())
+            {
+                $.ajax({
+                    type: "GET",
+                    url: "/Account/myRegister",
+                    data: {
+                        FirstName: $("#FirstName").val(),
+                        LastName: $("#LastName").val(),
+                        Email: $("#Email").val(),
+                        UserName: $("#UserName").val(),
+                        Password: $("#Password").val(),
+                        ConfirmPassword: $("#ConfirmPassword").val()
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        swal({
+                            title: "پیام",
+                            text: "عملیات با موفقیت انجام شد",
+                            type: "success"
+                        }, function () {
+                                window.location = "/Account/Login";
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+            }
+        }
+    </script>
+}

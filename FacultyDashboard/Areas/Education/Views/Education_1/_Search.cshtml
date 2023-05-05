@@ -1,0 +1,84 @@
+﻿<div id="con_close_modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="z-index:10000">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">فرم جستجو</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <form action="#">
+                <div class="modal-body">
+                        <div id="filterId"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">بستن</span>
+                    </button>
+                    <button type="button" id="modal_savebtn1" onclick="search()" class="btn btn-primary ml-1">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">جستجو</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        function searchfiels() {
+            $("#filterId").structFilter({
+                fields: [
+                    {
+                        id: "EducationDegree", type: "list-dropdown", label: "مقطع تحصیلی",
+                        list: [
+                            { id: "0", label: "کاردانی" },
+                            { id: "1", label: "کارشناسی" },
+                            { id: "2", label: "کارشناسی ارشد" },
+                            { id: "3", label: "دکترای تخصصی" }
+                        ]
+                    },
+                    {
+                        id: "Gender", type: "list-dropdown", label: "جنسیت",
+                        list: [
+                            { id: "0", label: "مرد" },
+                            { id: "1", label: "زن" }
+                        ]
+                    },
+                    { id: "RegisterDate", type: "date", label: "در تاریخ" },
+                    //{ id: "EndDate", type: "date", label: "تاریخ پایان دوره" },
+                    //{ id: "All_Refered", type: "number", label: "تعداد کل بیماران مراجعه کننده" }
+                ]
+            });
+            $("#filterId").structFilter({
+                buttonLabels: true
+            });
+        }
+
+        function search() {
+            const FaToEnNum = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+            var searchQuery = "";
+            var data = JSON.stringify($('#filterId').structFilter("val")/*, null, 2*/);
+            var parsedJSON = JSON.parse(data);
+            for (var i = 0; i < parsedJSON.length; i++) {
+                if (searchQuery != "")
+                    searchQuery += "&";
+                searchQuery += "field=" + parsedJSON[i].field.value;
+                searchQuery += "&op=" + parsedJSON[i].operator.value;
+                searchQuery += "&value=" + FaToEnNum(parsedJSON[i].value.value);
+            }
+            var pagenumber = 0;
+            var currentUrl = window.location.href;
+            if (currentUrl.indexOf("pageId") > 0) {
+                var urlParams = new URLSearchParams(window.location.search);
+                pagenumber = urlParams.get('pageId');
+                window.location.href = window.location.pathname + "?pageId=" + pagenumber + "&" + searchQuery;
+            }
+            else {
+                window.location.href = window.location.pathname + "?pageId=1&" + searchQuery;
+            }
+        }
+    </script>
+
